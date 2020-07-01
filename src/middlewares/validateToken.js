@@ -5,7 +5,7 @@ const logger = require( "../utilities/logger" );
 const SECRET = "whatever";
 
 module.exports = function( req, res, next ) {
-    const token = req.body.token || req.query.token || req.headers[ "x-access-token" ];
+    const token = req.body.token || req.query.token || req.headers[ "access-token" ];
 
     if ( token ) {
         return jwt.verify( token, SECRET, function( err, decoded ) {

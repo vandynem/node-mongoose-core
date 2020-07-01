@@ -1,26 +1,60 @@
-const mongoose = require( "mongoose" );
-const md5 = require( "md5" );
+'use strict';
+const Joi = require('joi');
+module.exports = {
+  async authSchema(params) {
+    return new Promise(async (resolve, reject) => {
+      try {
+        let schema = Joi.object().keys({
+          username: Joi.string().min(4).max(15).required(),
+          email: Joi.string().email().lowercase().required(),
+          password: Joi.string().min(2).required(),
+          created: Joi.date(),
+        });
+        let validInput = Joi.validate(params, schema);
+        if (validInput.error)
+          reject(validInput.error.details[0].message);
 
-const Schema = mongoose.Schema;
+        let value = validInput.value;
+        resolve(value);
+      } catch (err) {
+        reject(err);
+      }
+    });
+  },
+  async loginSchema(params) {
+    return new Promise(async (resolve, reject) => {
+      try {
+        let schema = Joi.object().keys({
+          email: Joi.string().email().lowercase().required(),
+          password: Joi.string().min(2).required(),
+        });
+        let validInput = Joi.validate(params, schema);
+        if (validInput.error)
+          reject(validInput.error.details[0].message);
 
-const userSchema = new Schema( {
-    // _id: mongoose.Schema.Types.ObjectId,
-    // id: { type: String, required: true },
-    username: { type: String, required: true },
-    password: { type: String, required: true },
-    name: { type: String, required: true },
-    age: { type: Number, required: true, min: 18 },
-    sex: { type: String, required: true, enum: [ "male", "female" ] },
-}, {
-    timestamps: true,
-} );
+        let value = validInput.value;
+        resolve(value);
+      } catch (err) {
+        reject(err);
+      }
+    });
+  },
+  async findByIdValidate(params) {
+    return new Promise(async (resolve, reject) => {
+      try {
+        let schema = Joi.object().keys({
+          _id: Joi.string().required(),
+        });
+        let validInput = Joi.validate(params, schema);
+        if (validInput.error)
+          reject(validInput.error.details[0].message);
 
-userSchema.methods.setPass = function( password ) {
-    this.password = md5( password );
+        let value = validInput.value;
+        resolve(value);
+      } catch (err) {
+        reject(err);
+      }
+    });
+  },
 };
 
-userSchema.methods.checkPass = function( password ) {
-    return this.password === md5( password );
-};
-
-module.exports = mongoose.model( "User", userSchema );

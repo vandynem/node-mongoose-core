@@ -1,5 +1,5 @@
 {
-  "name": "node-mongoose-practice",
+  "name": "node-mongoose-core",
   "version": "1.0.0",
   "description": "",
   "main": "index.js",
@@ -19,11 +19,14 @@
   },
   "homepage": "https://github.com/vandynem/node-mongoose-practice#readme",
   "dependencies": {
+    "@hapi/joi": "^17.1.1",
     "body-parser": "^1.19.0",
     "cors": "^2.8.5",
     "express": "^4.17.1",
     "express-jwt": "^5.3.1",
+    "joi": "^14.3.1",
     "jsonwebtoken": "^8.0.0",
+    "lodash": "^4.17.15",
     "md5": "^2.2.1",
     "mongodb": "^3.5.9",
     "mongoose": "^5.9.20",
